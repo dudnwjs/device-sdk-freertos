@@ -1,0 +1,265 @@
+[2018-01-17 12:27:15] [VERBOSE] : ThingPlug_Simple_SDK
+[2018-01-17 12:27:15] [INFO] : handleMQTTSetCallbacks()
+[2018-01-17 12:27:15] [INFO] : tpMQTTSetCallbacks result : 0
+[2018-01-17 12:27:15] [INFO] : tpSimpleInitialize
+                                                 serviceID : myservice, deviceID: mydevice
+[2018-01-17 12:27:15] [INFO] : tpSimpleInitialize : 0
+[2018-01-17 12:27:15] [INFO] : IP address is 192.168.0.29
+[2018-01-17 12:27:15] [INFO] : MAC address is 00 08 DC 1E CC F2
+[2018-01-17 12:27:15] [INFO] : Gateway address is 192.168.0.1
+[2018-01-17 12:27:15] [INFO] : Subnet Mask is 255.255.255.0
+[2018-01-17 12:27:15] [INFO] : DNS Server is 8.8.8.8
+[2018-01-17 12:27:15] [INFO] : client id : mydevice_00 08 DC 1E CC F
+[2018-01-17 12:27:15] [INFO] : handleMQTTCreate()
+[2018-01-17 12:27:15] [INFO] : Use secure(TLS) socket, host:, port:8883
+[2018-01-17 12:27:16] [INFO] : IP address is 192.168.0.29
+[2018-01-17 12:27:16] [INFO] : MAC address is 00 08 DC 1E CC F2
+[2018-01-17 12:27:16] [INFO] : Gateway address is 192.168.0.1
+[2018-01-17 12:27:17] [INFO] : Subnet Mask is 255.255.255.0
+[2018-01-17 12:27:17] [INFO] : DNS Server is 8.8.8.8
+ ok.
+[2018-01-17 12:27:17] [DEBUG] : clientID = mydevice_00 08 DC 1E CC F
+[2018-01-17 12:27:17] [INFO] : MQTT Connected
+[2018-01-17 12:27:17] [INFO] : MQTTConnected result : 0
+[2018-01-17 12:27:17] [INFO] : CONNECTION_STATUS : 2
+[2018-01-17 12:27:17] [INFO] : MQTT Request Subscribe topic : v1/dev/myservice/mydevice/down
+[2018-01-17 12:27:17] [INFO] : MQTTSubscribed result : 0
+[2018-01-17 12:27:17] [INFO] : tpSimpleAttribute
+                                                topic : v1/dev/myservice/mydevice/attribute
+                {
+                        "sysAvailableMemory":   10248,
+                                                        "sysFirmwareVersion":    "2.0.0",
+                        "sysHardwareVersion":   "1.0",
+                                                        "sysSerialNumber":       "2160900865",
+                        "sysErrorCode": 0,
+                                                "sysNetworkType":       "ethernet",
+                "sysDeviceIpAddress":   "192.168.0.29",
+                                                        "sysThingPlugIpAddress": "",
+                                "sysLocationLatitude":  37.380257,
+                                                                        "sysLocationLongitude":  127.115479,
+                                        "act7colorLed": 0
+                                                         }
+[2018-01-17 12:27:17] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:17] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:17] [DEBUG] : topic : v1/dev/myservice/mydevice/attribute
+[2018-01-17 12:27:17] [DEBUG] : payload : {
+                                                "sysAvailableMemory":   10248,
+        "sysFirmwareVersion":   "2.0.0",
+                                                "sysHardwareVersion":   "1.0",
+        "sysSerialNumber":      "2160900865",
+                                                "sysErrorCode": 0,
+                                                                        "sysNetworkType":        "ethernet",
+                                        "sysDeviceIpAddress":   "192.168.0.29",
+        "sysThingPlugIpAddress":        "",
+                                                                "sysLocationLatitude":   37.380257,
+                                "sysLocationLongitude": 127.115479,
+                                                                        "act7colorLed":  0
+                 }
+[2018-01-17 12:27:17] [DEBUG] : payloadlen : 354
+[2018-01-17 12:27:17] [DEBUG] : qos : 1
+[2018-01-17 12:27:17] [DEBUG] : retained : 0
+[2018-01-17 12:27:17] [DEBUG] : dup : 0
+[2018-01-17 12:27:17] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:17] [DEBUG] : waitfor
+[2018-01-17 12:27:17] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:17] [INFO] : MQTTMessageDelivered token : 0, step : 0
+[2018-01-17 12:27:17] [INFO] : tpSDKCreate result : 0
+[2018-01-17 12:27:17] [INFO] : handleMQTTIsConnected()
+[2018-01-17 12:27:17] [INFO] : tpSimpleTelemetry
+                                                topic : v1/dev/myservice/mydevice/telemetry
+                {
+                        "temp1":        62.26,
+                                                "humi1":        46,
+                                                                        "light1":        226,
+                        "ts":   1516159637
+                                          }
+[2018-01-17 12:27:17] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:17] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:17] [DEBUG] : topic : v1/dev/myservice/mydevice/telemetry
+[2018-01-17 12:27:17] [DEBUG] : payload : {
+                                                "temp1":        62.26,
+                                                                        "humi1": 46,
+                "light1":       226,
+                                        "ts":   1516159637
+                                                          }
+[2018-01-17 12:27:17] [DEBUG] : payloadlen : 68
+[2018-01-17 12:27:17] [DEBUG] : qos : 1
+[2018-01-17 12:27:17] [DEBUG] : retained : 0
+[2018-01-17 12:27:17] [DEBUG] : dup : 0
+[2018-01-17 12:27:17] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:17] [DEBUG] : waitfor
+[2018-01-17 12:27:17] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:17] [INFO] : MQTTMessageDelivered token : 0, step : 2
+[2018-01-17 12:27:17] [INFO] : handleMQTTYield()
+[2018-01-17 12:27:18] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:19] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:20] [INFO] : CallMessageArrivedCallback()
+[2018-01-17 12:27:20] [INFO] : MQTTMessageArrived topic : v1/dev/myservice/mydevice/down, step : 2
+[2018-01-17 12:27:20] [INFO] : payload : {"deviceId":"4b0b54c0-f6a5-11e7-8ba2-6f996b68699e","cmdId":1747801586,"cmd":"setAttribute","attribute":{"act7colorLed":3}}
+[2018-01-17 12:27:20] [INFO] : act7colorLed : 3, 1747801586
+[2018-01-17 12:27:20] [INFO] : tpSimpleAttribute
+                                                topic : v1/dev/myservice/mydevice/attribute
+                {
+                        "act7colorLed": 3
+                                         }
+[2018-01-17 12:27:20] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:20] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:20] [DEBUG] : topic : v1/dev/myservice/mydevice/attribute
+[2018-01-17 12:27:20] [DEBUG] : payload : {
+                                                "act7colorLed": 3
+                                                                 }
+[2018-01-17 12:27:20] [DEBUG] : payloadlen : 22
+[2018-01-17 12:27:20] [DEBUG] : qos : 1
+[2018-01-17 12:27:20] [DEBUG] : retained : 0
+[2018-01-17 12:27:20] [DEBUG] : dup : 0
+[2018-01-17 12:27:20] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:20] [DEBUG] : waitfor
+[2018-01-17 12:27:20] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:20] [INFO] : MQTTMessageDelivered token : 0, step : 2
+[2018-01-17 12:27:21] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:22] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:22] [INFO] : CallMessageArrivedCallback()
+[2018-01-17 12:27:22] [INFO] : MQTTMessageArrived topic : v1/dev/myservice/mydevice/down, step : 2
+[2018-01-17 12:27:22] [INFO] : payload : {"serviceName":"myservice","deviceName":"mydevice","cmdId":7,"cmd":"jsonRpc","rpcMode":"oneway","rpcReq":{"jsonrpc":"2.0","method":"tp_user","params":[{"act7colorLed":"1"}],"id":1067798606}}
+[2018-01-17 12:27:22] [INFO] : RPC_USER
+[2018-01-17 12:27:22] [INFO] :
+                               rpc : 2.0,
+                                         id : 1067798606,
+                                                         cmd : 0
+[2018-01-17 12:27:22] [INFO] : tpSimpleRawResult
+                                                topic : v1/dev/myservice/mydevice/up
+         {
+                "cmd":  "jsonRpc",
+                                        "cmdId":        1,
+                                                                "result":        "success",
+                        "rpcRsp":       {
+                                                        "jsonrpc":      "2.0",
+                "id":   1067798606,
+                                                "result":       {"act7colorLed":0}
+                }
+                 }
+[2018-01-17 12:27:22] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:22] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:22] [DEBUG] : topic : v1/dev/myservice/mydevice/up
+[2018-01-17 12:27:22] [DEBUG] : payload : {
+                                                "cmd":  "jsonRpc",
+                                                                        "cmdId": 1,
+                "result":       "success",
+                                                "rpcRsp":       {
+                                                                         "jsonrpc":      "2.0",
+                                "id":   1067798606,
+                                                                "result":        {"act7colorLed":0}
+                                }
+                                 }
+[2018-01-17 12:27:22] [DEBUG] : payloadlen : 144
+[2018-01-17 12:27:22] [DEBUG] : qos : 1
+[2018-01-17 12:27:22] [DEBUG] : retained : 0
+[2018-01-17 12:27:22] [DEBUG] : dup : 0
+[2018-01-17 12:27:22] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:22] [DEBUG] : waitfor
+[2018-01-17 12:27:22] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:22] [INFO] : MQTTMessageDelivered token : 0, step : 2
+[2018-01-17 12:27:23] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:23] [INFO] : handleMQTTIsConnected()
+[2018-01-17 12:27:23] [INFO] : tpSimpleTelemetry
+                                                topic : v1/dev/myservice/mydevice/telemetry
+                {
+                        "temp1":        22.34,
+                                                "humi1":        44,
+                                                                        "light1":        234,
+                        "ts":   1516159643
+                                          }
+[2018-01-17 12:27:23] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:23] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:23] [DEBUG] : topic : v1/dev/myservice/mydevice/telemetry
+[2018-01-17 12:27:23] [DEBUG] : payload : {
+                                                "temp1":        22.34,
+                                                                        "humi1": 44,
+                "light1":       234,
+                                        "ts":   1516159643
+                                                          }
+[2018-01-17 12:27:23] [DEBUG] : payloadlen : 68
+[2018-01-17 12:27:23] [DEBUG] : qos : 1
+[2018-01-17 12:27:23] [DEBUG] : retained : 0
+[2018-01-17 12:27:23] [DEBUG] : dup : 0
+[2018-01-17 12:27:23] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:23] [DEBUG] : waitfor
+[2018-01-17 12:27:23] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:23] [INFO] : MQTTMessageDelivered token : 0, step : 2
+[2018-01-17 12:27:23] [INFO] : handleMQTTYield()
+[2018-01-17 12:27:24] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:25] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:25] [INFO] : CallMessageArrivedCallback()
+[2018-01-17 12:27:25] [INFO] : MQTTMessageArrived topic : v1/dev/myservice/mydevice/down, step : 2
+[2018-01-17 12:27:25] [INFO] : payload : {"serviceName":"myservice","deviceName":"mydevice","cmdId":-9999,"cmd":"jsonRpc","rpcMode":"oneway","rpcReq":{"jsonrpc":"2.0","method":"tp_remote","params":[{"act7colorLed":1}],"id":1067798607}}
+[2018-01-17 12:27:25] [INFO] : tpSimpleResult
+                                             topic : v1/dev/myservice/mydevice/up
+      {
+        "cmd":  "jsonRpc",
+                                "cmdId":        1,
+                                                        "result":       "fail",
+        "rpcRsp":       {
+                                        "jsonrpc":      "2.0",
+                                                                        "id":    1067798607,
+                                "error":        {
+                                                                        "code":  106,
+                                "message":      "FAIL"
+                                                                }
+                                                                        }
+                                                                         }
+[2018-01-17 12:27:25] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:25] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:25] [DEBUG] : topic : v1/dev/myservice/mydevice/up
+[2018-01-17 12:27:25] [DEBUG] : payload : {
+                                                "cmd":  "jsonRpc",
+                                                                        "cmdId": 1,
+                "result":       "fail",
+                                        "rpcRsp":       {
+                                                                        "jsonrpc":       "2.0",
+                                "id":   1067798607,
+                                                                "error": {
+                        "code": 106,
+                                                        "message":      "FAIL"
+                }
+                        }
+                         }
+[2018-01-17 12:27:25] [DEBUG] : payloadlen : 164
+[2018-01-17 12:27:25] [DEBUG] : qos : 1
+[2018-01-17 12:27:25] [DEBUG] : retained : 0
+[2018-01-17 12:27:25] [DEBUG] : dup : 0
+[2018-01-17 12:27:25] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:25] [DEBUG] : waitfor
+[2018-01-17 12:27:25] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:25] [INFO] : MQTTMessageDelivered token : 0, step : 2
+[2018-01-17 12:27:26] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:27] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:28] [DEBUG] : recv waiting!!
+[2018-01-17 12:27:28] [INFO] : handleMQTTIsConnected()
+[2018-01-17 12:27:28] [INFO] : tpSimpleTelemetry
+                                                topic : v1/dev/myservice/mydevice/telemetry
+                {
+                        "temp1":        23.08,
+                                                "humi1":        48,
+                                                                        "light1":        208,
+                        "ts":   1516159648
+                                          }
+[2018-01-17 12:27:29] [INFO] : handleMQTTPublishMessageWithTopic()
+[2018-01-17 12:27:29] [DEBUG] : MQTT publish call.
+[2018-01-17 12:27:29] [DEBUG] : topic : v1/dev/myservice/mydevice/telemetry
+[2018-01-17 12:27:29] [DEBUG] : payload : {
+                                                "temp1":        23.08,
+                                                                        "humi1": 48,
+                "light1":       208,
+                                        "ts":   1516159648
+                                                          }
+[2018-01-17 12:27:29] [DEBUG] : payloadlen : 68
+[2018-01-17 12:27:29] [DEBUG] : qos : 1
+[2018-01-17 12:27:29] [DEBUG] : retained : 0
+[2018-01-17 12:27:29] [DEBUG] : dup : 0
+[2018-01-17 12:27:29] [DEBUG] : sendPacket rc = 0
+[2018-01-17 12:27:29] [DEBUG] : waitfor
+[2018-01-17 12:27:29] [DEBUG] : MQTT publish Success.
+[2018-01-17 12:27:29] [INFO] : MQTTMessageDelivered token : 0, step : 2
+[2018-01-17 12:27:29] [INFO] : handleMQTTYield()
+[2018-01-17 12:27:30] [DEBUG] : recv waiting!!
+
