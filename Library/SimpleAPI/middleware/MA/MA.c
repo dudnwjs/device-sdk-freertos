@@ -64,7 +64,7 @@ static char mClientID[SIZE_CLIENT_ID] = "";
 
 static void attribute(void);
 static int telemetry(void);
-static char* make_response(RPCResponse *rsp);
+static char* make_response(RPCResponse *rsp, char* resultBody);
 
 void MQTTConnected(int result) {
     SKTDebugPrint(LOG_LEVEL_INFO, "MQTTConnected result : %d", result);
@@ -125,6 +125,14 @@ void MQTTMessageArrived(char* topic, char* msg, int msgLen) {
         char* method = methodObject->valuestring;
         if(!cmd || !method) return;
 
+        RPCResponse rsp;
+        memset(&rsp, 0, sizeof(RPCResponse));
+        rsp.result = 1;
+        rsp.cmd = cmd;
+        rsp.cmdId = 1;
+        rsp.jsonrpc = rpc;
+        rsp.id = id;
+
         // Reserved Procedure for ThingPlug
         if(strncmp(method, RPC_RESET, strlen(RPC_RESET)) == 0) {
             // TODO RESET
@@ -150,9 +158,9 @@ void MQTTMessageArrived(char* topic, char* msg, int msgLen) {
             // TODO SOFTWARE REINSTALL
             SKTDebugPrint(LOG_LEVEL_INFO, "RPC_SOFTWARE_REINSTALL");
             
-        } else if(strncmp(method, RPC_SOFTWARE_REUNINSTALL, strlen(RPC_SOFTWARE_REUNINSTALL)) == 0) {
-            // TODO SOFTWARE REUNINSTALL
-            SKTDebugPrint(LOG_LEVEL_INFO, "RPC_SOFTWARE_REUNINSTALL");
+        } else if(strncmp(method, RPC_SOFTWARE_UNINSTALL, strlen(RPC_SOFTWARE_UNINSTALL)) == 0) {
+            // TODO SOFTWARE UNINSTALL
+            SKTDebugPrint(LOG_LEVEL_INFO, "RPC_SOFTWARE_UNINSTALL");
             
         } else if(strncmp(method, RPC_SOFTWARE_UPDATE, strlen(RPC_SOFTWARE_UPDATE)) == 0) {
             // TODO SOFTWARE UPDATE
@@ -170,61 +178,64 @@ void MQTTMessageArrived(char* topic, char* msg, int msgLen) {
             // TODO SIGNAL STASTUS REPORT
             SKTDebugPrint(LOG_LEVEL_INFO, "RPC_SIGNAL_STATUS_REPORT");
 
-        } else if(strncmp(method, RPC_USER, strlen(RPC_USER)) == 0) {
-            // USER
+        } 
+        
+        if(strncmp(method, RPC_USER, strlen(RPC_USER)) == 0 ) {
             SKTDebugPrint(LOG_LEVEL_INFO, "RPC_USER");
             if(!paramsObject) return;
             cJSON* paramObject = cJSON_GetArrayItem(paramsObject, 0);
             controlObject = cJSON_GetObjectItemCaseSensitive(paramObject, "act7colorLed");
             if(!controlObject) return;
             control = controlObject->valueint;
-            SKTDebugPrint(LOG_LEVEL_INFO, "\nrpc : %s,\nid : %d,\ncmd : %d", rpc, id, control);
+            SKTDebugPrint(LOG_LEVEL_INFO, "\nrpc : %s,\nid : %d,\ncontrol : %d", rpc, id, control);
             rc = RGB_LEDControl(control);
-        }
-        RPCResponse rsp;
-        memset(&rsp, 0, sizeof(RPCResponse));
-        rsp.cmd = cmd;
-        rsp.cmdId = 1;
-        rsp.jsonrpc = rpc;
-        rsp.id = id;
-        rsp.fail = rc;
-        // control success
-        if(rc == 0) {
-            char body[128] = "";
-            snprintf(body, sizeof(body), "{\"%s\":%d}", controlObject->string, control);
-            rsp.resultBody = body;
-            rsp.result = "success";
-            char* rpcRsp = make_response(&rsp);
-            tpSimpleRawResult(rpcRsp);
-            free(rpcRsp);
-        }
-        // control fail
-        else {
+            // control success
+            if(rc == 0) {
+                char body[128] = "";
+                snprintf(body, sizeof(body), "{\"%s\":%d}", controlObject->string, control);
+                char* rpcRsp = make_response(&rsp, body);
+                tpSimpleRawResult(rpcRsp);
+                free(rpcRsp);
+            }
+            // control fail
+            else {
+                rsp.result = 0;
+                ArrayElement* resultArray = calloc(1, sizeof(ArrayElement));
+                resultArray->capacity = 2;
+                resultArray->element = calloc(1, sizeof(Element) * resultArray->capacity);
+                int errorCode = 106;
+
+                Element* item = resultArray->element + resultArray->total;
+                item->type = JSON_TYPE_LONG;
+                item->name = "code";
+                item->value = &errorCode;
+                resultArray->total++;
+
+                item = resultArray->element + resultArray->total;
+                item->type = JSON_TYPE_STRING;
+                item->name = "message";
+                item->value = "FAIL";
+                resultArray->total++;
+
+                rsp.resultArray = resultArray;
+
+                tpSimpleResult(&rsp);
+                free(resultArray->element);
+                free(resultArray);
+            }
+        } else {
             ArrayElement* resultArray = calloc(1, sizeof(ArrayElement));
-            resultArray->capacity = 2;
+            resultArray->capacity = 1;
             resultArray->element = calloc(1, sizeof(Element) * resultArray->capacity);
-            int errorCode = 106;
-
             Element* item = resultArray->element + resultArray->total;
-            item->type = JSON_TYPE_LONG;
-            item->name = "code";
-            item->value = &errorCode;
-            resultArray->total++;
-
-            item = resultArray->element + resultArray->total;
             item->type = JSON_TYPE_STRING;
-            item->name = "message";
-            item->value = "FAIL";
+            item->name = "status";
+            item->value = "SUCCESS";
             resultArray->total++;
-            
             rsp.resultArray = resultArray;
-            rsp.result = "fail";
-
             tpSimpleResult(&rsp);
-            free(resultArray->element);
-            free(resultArray);
         }
-        
+                
     } else {
         cJSON* cmdObject = cJSON_GetObjectItemCaseSensitive(root, "cmd");
         cJSON* cmdIdObject = cJSON_GetObjectItemCaseSensitive(root, "cmdId");
@@ -499,7 +510,7 @@ static void attribute(void) {
 #endif
 }
 
-static char* make_response(RPCResponse *rsp) {
+static char* make_response(RPCResponse *rsp, char* resultBody) {
     char* jsonData;
     cJSON* jsonObject = cJSON_CreateObject();
     cJSON* rpcRspObject = cJSON_CreateObject();
@@ -507,18 +518,24 @@ static char* make_response(RPCResponse *rsp) {
 
     cJSON_AddStringToObject(jsonObject, CMD, rsp->cmd);
     cJSON_AddNumberToObject(jsonObject, CMD_ID, rsp->cmdId);
-    cJSON_AddStringToObject(jsonObject, RESULT, rsp->result);
+    if(rsp->result) {
+        cJSON_AddStringToObject(jsonObject, RESULT, "success");
+    } else {
+        cJSON_AddStringToObject(jsonObject, RESULT, "fail");
+    }
 
     cJSON_AddStringToObject(rpcRspObject, JSONRPC, rsp->jsonrpc);
     cJSON_AddNumberToObject(rpcRspObject, ID, rsp->id);
-    resultObject = cJSON_CreateRaw(rsp->resultBody);
-    if(rsp->fail) {
-        cJSON_AddItemToObject(rpcRspObject, ERROR, resultObject);
-    } else {
-        cJSON_AddItemToObject(rpcRspObject, RESULT, resultObject);
+    if(resultBody!=NULL) {
+        resultObject = cJSON_CreateRaw(resultBody);
+        if(rsp->result) {
+            cJSON_AddItemToObject(rpcRspObject, RESULT, resultObject);
+        } else {
+            cJSON_AddItemToObject(rpcRspObject, ERROR, resultObject);
+        }
     }
     cJSON_AddItemToObject(jsonObject, RPC_RSP, rpcRspObject);
-    jsonData = cJSON_Print(jsonObject);
+    jsonData = cJSON_PrintUnformatted(jsonObject);
     cJSON_Delete(jsonObject);
     return jsonData;
 }
