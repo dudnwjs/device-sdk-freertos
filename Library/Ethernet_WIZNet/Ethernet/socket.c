@@ -409,7 +409,7 @@ int32_t recv(uint8_t sn, uint8_t * buf, uint16_t len)
 #endif
 		Timer timer;
 		TimerInit(&timer);
-		TimerCountdownMS(&timer, 1000);
+		TimerCountdownMS(&timer, 8000);
 
 		while(1)
 		{
