@@ -590,7 +590,7 @@ int start() {
 
     char* subscribeTopics[] = { mTopicControlDown };
 
-#if(1)
+#if(MQTT_ENABLE_SERVER_CERT_AUTH)
 	char host[] = MQTT_SECURE_HOST;
 	int port = MQTT_SECURE_PORT;
 #else
@@ -598,7 +598,7 @@ int start() {
 	int port = MQTT_PORT;
 #endif
     rc = tpSDKCreate(host, port, MQTT_KEEP_ALIVE, SIMPLE_DEVICE_TOKEN, NULL, 
-        1, subscribeTopics, TOPIC_SUBSCRIBE_SIZE, NULL, mClientID, MQTT_CLEAN_SESSION);
+            MQTT_ENABLE_SERVER_CERT_AUTH, subscribeTopics, TOPIC_SUBSCRIBE_SIZE, NULL, mClientID, MQTT_CLEAN_SESSION);
     SKTDebugPrint(LOG_LEVEL_INFO, "tpSDKCreate result : %d", rc);
     return rc;
 }
